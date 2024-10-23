@@ -1,9 +1,10 @@
+import { Header } from '@/components/header'
 import { Outlet } from 'react-router-dom'
 
 export function AppLayout() {
   return (
     <div>
-      <div>Header</div>
+      <Header />
       <div>
         <Outlet />
       </div>
