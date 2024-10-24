@@ -3,9 +3,12 @@ import { api } from '@/lib/axios'
 import type { CharactersMetaData } from '@/types/types'
 import { md5 } from 'js-md5'
 
-export async function getCharacters() {
-  const limit = 20
-  const offset = 0
+export interface getCharactersQuery {
+  pageIndex: number
+  limit: number
+}
+
+export async function getCharacters({ pageIndex, limit }: getCharactersQuery) {
   const ts = Date.now()
   const privateKey = env.VITE_API_MARVEL_PRIVATE_KEY
   const publicKey = env.VITE_API_MARVEL_PUBLIC_KEY
@@ -18,7 +21,7 @@ export async function getCharacters() {
       apikey: publicKey,
       hash,
       limit,
-      offset,
+      offset: pageIndex * limit,
     },
   })
 
