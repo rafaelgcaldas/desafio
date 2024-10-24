@@ -8,8 +8,9 @@ describe('<Menu />', () => {
   it('should render the menu', () => {
     render(<Header />)
 
+    expect(screen.getByTestId('desktop-menu')).toBeVisible()
     expect(screen.getByLabelText(/open menu/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/open search/i)).toBeTruthy()
+    expect(screen.getByLabelText(/open search/i)).toBeVisible()
     expect(
       screen.getByRole('img', { name: /marvel logo/i })
     ).toBeInTheDocument()

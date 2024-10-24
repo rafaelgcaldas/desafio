@@ -12,20 +12,20 @@ export function Header() {
         <img src={marvelLogo} alt="Marvel logo" />
 
         <div className="flex items-center justify-center gap-2 md:gap-6">
-          <nav className="hidden md:block">
+          <nav className="hidden md:block" data-testid="desktop-menu">
             <ul className="flex items-center gap-8">
               <li className="text-lg font-medium hover:opacity-90">
-                <a href="#">Home</a>
+                <a href="/">Home</a>
               </li>
               <li className="text-lg font-medium hover:opacity-90">
-                <a href="#">Favoritos</a>
+                <a href="/favotes">Favoritos</a>
               </li>
             </ul>
           </nav>
 
           <div className="flex gap-4">
             <Menu
-              className="block size-5 md:hidden"
+              className="opacity-1 block size-5 md:invisible md:hidden"
               aria-label="Open menu"
               onClick={() => setIsOpen(true)}
             />
