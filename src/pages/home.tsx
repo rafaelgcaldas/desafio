@@ -1,3 +1,9 @@
+import { Banner } from '@/components/banner'
+
 export function Home() {
-  return <h1>Home</h1>
+  return (
+    <>
+      <Banner hasLogo={true} title="Seja bem vindo ao universo" />
+    </>
+  )
 }
