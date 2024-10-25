@@ -3,6 +3,7 @@ import { Menu } from 'lucide-react'
 import { useState } from 'react'
 import { MobileHeader } from '../mobile-header'
 import { SearchDialog } from '../search-dialog'
+import { Link } from 'react-router-dom'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -16,10 +17,10 @@ export function Header() {
           <nav className="hidden md:block" data-testid="desktop-menu">
             <ul className="flex items-center gap-8">
               <li className="text-lg font-medium hover:opacity-90">
-                <a href="/">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li className="text-lg font-medium hover:opacity-90">
-                <a href="/favotes">Favoritos</a>
+                <Link to="/favotes">Favoritos</Link>
               </li>
             </ul>
           </nav>
