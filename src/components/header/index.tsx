@@ -1,7 +1,8 @@
 import marvelLogo from '@/assets/marvel-logo.svg'
-import { Menu, Search } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { useState } from 'react'
 import { MobileHeader } from '../mobile-header'
+import { SearchDialog } from '../search-dialog'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -29,7 +30,7 @@ export function Header() {
               aria-label="Open menu"
               onClick={() => setIsOpen(true)}
             />
-            <Search className="size-5" aria-label="Open search" />
+            <SearchDialog />
           </div>
         </div>
       </header>
