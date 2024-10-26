@@ -1,13 +1,19 @@
 import { getCharacter } from '@/api/get-character'
 import { Banner } from '@/components/banner'
+import { Button } from '@/components/ui/button'
+import { useStore } from '@/store'
+import type { Characters } from '@/types/types'
 import { useQuery } from '@tanstack/react-query'
-import { BookOpen } from 'lucide-react'
+import { BookOpen, Star } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 export function CharacterDetails() {
   const { characterId } = useParams()
+  const { favoritesList, addFavoriteCharacter } = useStore()
+  const [character, setCharacter] = useState<Characters>()
 
-  const { data: character } = useQuery({
+  const { data } = useQuery({
     queryKey: ['character', characterId],
     queryFn: () => getCharacter(Number(characterId!)),
     staleTime: 5 * 10000,
@@ -15,9 +21,34 @@ export function CharacterDetails() {
     refetchOnMount: false,
   })
 
-  console.log('aaaa', character)
+  useEffect(() => {
+    const isfavorite = favoritesList.some(
+      (favorite) => favorite.id === data?.id
+    )
 
-  console.log(characterId)
+    if (data) {
+      if (isfavorite) {
+        const newCharacter = {
+          ...data,
+          favorite: true,
+        }
+
+        setCharacter(newCharacter)
+      } else {
+        setCharacter(data)
+      }
+    }
+  }, [data, favoritesList])
+
+  function handleFavoriteCharacter(character: Characters) {
+    const favoriteCharacter = {
+      ...character,
+      favorite: true,
+    }
+
+    addFavoriteCharacter(favoriteCharacter)
+  }
+
   return (
     <>
       <Banner title={character?.name ?? ''} />
@@ -31,6 +62,20 @@ export function CharacterDetails() {
             />
           </div>
 
+          <div className="text-center">
+            <Button
+              variant="outline"
+              onClick={() => handleFavoriteCharacter(character!)}
+            >
+              <Star className="size-12" />
+              {character?.favorite ? (
+                <span>Remover favorito</span>
+              ) : (
+                <span>Favoritar personagem</span>
+              )}
+            </Button>
+          </div>
+
           <p className="text-lg">{character?.description}</p>
 
           <div className="grid grid-cols-2 gap-8">
@@ -41,9 +86,9 @@ export function CharacterDetails() {
               {character?.series?.items &&
               character?.series?.items.length > 0 ? (
                 <div className="space-y-2">
-                  {character?.series?.items.map((item) => (
+                  {character?.series?.items.map((item, index) => (
                     <div
-                      key={item.name}
+                      key={index}
                       className="flex items-center gap-4 rounded-lg bg-blue-100 p-4"
                     >
                       <BookOpen />
@@ -63,9 +108,9 @@ export function CharacterDetails() {
               {character?.events?.items &&
               character?.events?.items.length > 0 ? (
                 <div className="space-y-2">
-                  {character?.events?.items.map((item) => (
+                  {character?.events?.items.map((item, index) => (
                     <div
-                      key={item.name}
+                      key={index}
                       className="flex items-center gap-4 rounded-lg bg-yellow-100 p-4"
                     >
                       <BookOpen />
@@ -88,9 +133,9 @@ export function CharacterDetails() {
               {character?.comics?.items &&
               character?.comics?.items.length > 0 ? (
                 <div className="space-y-2">
-                  {character?.comics?.items.map((item) => (
+                  {character?.comics?.items.map((item, index) => (
                     <div
-                      key={item.name}
+                      key={index}
                       className="flex items-center gap-4 rounded-lg bg-green-100 p-4"
                     >
                       <BookOpen />
@@ -111,9 +156,9 @@ export function CharacterDetails() {
               {character?.stories?.items &&
               character?.stories?.items.length > 0 ? (
                 <div className="space-y-2">
-                  {character?.stories?.items.map((item) => (
+                  {character?.stories?.items.map((item, index) => (
                     <div
-                      key={item.name}
+                      key={index}
                       className="flex items-center gap-4 rounded-lg bg-red-100 p-4"
                     >
                       <BookOpen />
