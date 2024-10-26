@@ -22,7 +22,7 @@ export function Pagination({
   const pages = Math.ceil(totalCount / perPage) || 1
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
       <span>Total: {totalCount} personagens</span>
 
       <div className="flex items-center gap-6 lg:gap-8">
