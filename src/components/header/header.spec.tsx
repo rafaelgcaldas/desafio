@@ -6,7 +6,7 @@ import { Header } from '.'
 import { MemoryRouter } from 'react-router-dom'
 
 describe('<Menu />', () => {
-  it('should render the menu', () => {
+  it('should be able render the menu', () => {
     render(
       <MemoryRouter>
         <Header />
