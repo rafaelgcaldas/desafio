@@ -1,9 +1,9 @@
 import marvelLogo from '@/assets/marvel-logo.svg'
 import { Menu } from 'lucide-react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { MobileHeader } from '../mobile-header'
 import { SearchDialog } from '../search-dialog'
-import { Link } from 'react-router-dom'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,7 +20,7 @@ export function Header() {
                 <Link to="/">Home</Link>
               </li>
               <li className="text-lg font-medium hover:opacity-90">
-                <Link to="/favotes">Favoritos</Link>
+                <Link to="/favorites">Favoritos</Link>
               </li>
             </ul>
           </nav>
