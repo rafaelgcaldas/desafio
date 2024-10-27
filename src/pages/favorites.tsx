@@ -2,6 +2,7 @@ import { Banner } from '@/components/banner'
 import { Card } from '@/components/card'
 import { useStore } from '@/store'
 import type { Characters } from '@/types/types'
+import { Info } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 export function Favorites() {
@@ -12,6 +13,20 @@ export function Favorites() {
   function handleCharacterNavigation(characterVisited: Characters) {
     addRecentlyVisitedCharacter(characterVisited)
     navigate(`/details/${characterVisited.id}`)
+  }
+
+  if (favoritesList.length === 0) {
+    return (
+      <>
+        <Banner title="Sua coleção de personagens" />
+        <div className="mx-auto max-w-[1200px] p-4">
+          <div className="flex items-center gap-4 rounded-lg bg-blue-100 px-4 py-8">
+            <Info size-5 />
+            <p>Você não possui nenhum personagem favorito.</p>
+          </div>
+        </div>
+      </>
+    )
   }
 
   return (
