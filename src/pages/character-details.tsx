@@ -1,5 +1,6 @@
 import { getCharacter } from '@/api/get-character'
 import { Banner } from '@/components/banner'
+import { DetailsSkeleton } from '@/components/loading/details-skeleton'
 import { Button } from '@/components/ui/button'
 import { useStore } from '@/store'
 import type { Characters } from '@/types/types'
@@ -13,7 +14,7 @@ export function CharacterDetails() {
   const { favoritesList, addFavoriteCharacter } = useStore()
   const [character, setCharacter] = useState<Characters>()
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['character', characterId],
     queryFn: () => getCharacter(Number(characterId!)),
     staleTime: 5 * 10000,
@@ -49,6 +50,15 @@ export function CharacterDetails() {
     addFavoriteCharacter(favoriteCharacter)
   }
 
+  if (isLoading) {
+    return (
+      <>
+        <Banner title="" />
+        <DetailsSkeleton />
+      </>
+    )
+  }
+
   return (
     <>
       <Banner title={character?.name ?? ''} />
@@ -78,7 +88,7 @@ export function CharacterDetails() {
 
           <p className="text-lg">{character?.description}</p>
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div>
               <h2 className="mb-8 text-3xl font-bold">
                 Séries ({character?.series.available})
@@ -124,7 +134,7 @@ export function CharacterDetails() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div>
               <h2 className="mb-8 text-3xl font-bold">
                 Histórias em quadrinhos ({character?.comics.available})
