@@ -1,16 +1,10 @@
 import '@testing-library/jest-dom'
 
 import { render } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import userEvent from '@testing-library/user-event'
 import { SearchDialog } from '.'
-
-const searchCharacters = vi.fn() // Mocka o módulo de API
-
-vi.mock('../path/to/api', () => ({
-  searchCharacters,
-}))
 
 describe('<SearchDialog />', () => {
   it('should be able render open modal button', () => {
