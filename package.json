@@ -8,6 +8,8 @@
     "dev:test": "vite --port 20789 --mode test",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:e2e": " playwright test",
+    "test:ui": " playwright test --ui",
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
@@ -39,6 +41,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.11.1",
+    "@playwright/test": "^1.48.2",
     "@storybook/addon-essentials": "^8.3.6",
     "@storybook/addon-interactions": "^8.3.6",
     "@storybook/addon-links": "^8.3.6",
