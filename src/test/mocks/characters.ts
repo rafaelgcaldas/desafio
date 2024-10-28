@@ -11,7 +11,7 @@ export const charactersMetaData: CharactersMetaData = {
   data: {
     offset: 0,
     limit: 2,
-    total: 1564,
+    total: 2,
     count: 2,
     results: [
       {
