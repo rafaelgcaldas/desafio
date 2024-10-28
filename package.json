@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:test": "vite --port 20789 --mode test",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test": "vitest run",
@@ -62,6 +63,7 @@
     "husky": "^9.1.6",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.10",
+    "msw": "^2.5.2",
     "postcss": "^8.4.47",
     "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
@@ -75,6 +77,11 @@
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }
