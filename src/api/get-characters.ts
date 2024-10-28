@@ -25,6 +25,5 @@ export async function getCharacters({ pageIndex, limit }: getCharactersQuery) {
     },
   })
 
-  console.log(response.data)
   return response.data
 }

@@ -3,7 +3,7 @@ import { api } from '@/lib/axios'
 import type { CharactersMetaData } from '@/types/types'
 import { md5 } from 'js-md5'
 
-export async function getCharacter(characterId: number) {
+export async function getCharacter(characterId: string) {
   const limit = 20
   const offset = 0
   const ts = Date.now()
@@ -27,6 +27,5 @@ export async function getCharacter(characterId: number) {
 
   const character = response.data
 
-  console.log(character.data.results)
   return character.data.results[0]
 }
