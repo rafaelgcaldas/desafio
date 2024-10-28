@@ -2,7 +2,10 @@ import { Image } from 'lucide-react'
 
 export function DetailsSkeleton() {
   return (
-    <div className="mx-auto -mt-32 max-w-[1200px] animate-pulse p-4">
+    <div
+      data-testid="details-skeleton"
+      className="mx-auto -mt-32 max-w-[1200px] animate-pulse p-4"
+    >
       <div className="space-y-10">
         <div className="flex flex-1 justify-center">
           <div className="mb-4 flex size-48 items-center justify-center rounded bg-gray-500">
