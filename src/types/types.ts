@@ -89,3 +89,8 @@ export interface Url {
   type: string
   url: string
 }
+
+export interface RelatedCharacter {
+  resourceURI: string
+  name: string
+}
