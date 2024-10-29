@@ -4,7 +4,7 @@ export function DetailsSkeleton() {
   return (
     <div
       data-testid="details-skeleton"
-      className="mx-auto -mt-32 max-w-[1200px] animate-pulse p-4"
+      className="mx-auto -mt-32 max-w-[1200px] animate-smooth-animation-pulse p-4"
     >
       <div className="space-y-10">
         <div className="flex flex-1 justify-center">

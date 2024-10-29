@@ -2,7 +2,7 @@ import { Image } from 'lucide-react'
 
 export function SkeletonCard() {
   return (
-    <div className="group w-full animate-pulse rounded-lg border border-gray-200 bg-white">
+    <div className="group w-full animate-smooth-animation-pulse rounded-lg border border-gray-200 bg-white">
       <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-500">
         <Image role="img" aria-label="Imagem de carregamento" />
       </div>
