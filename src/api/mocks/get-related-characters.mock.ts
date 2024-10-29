@@ -5,15 +5,9 @@ interface Param {
   characterId: string
 }
 
-export const getCharactersMock = http.get<Param, never>(
+export const getRelatedCharacterMock = http.get<Param, never>(
   '/v1/public/characters/:characterId/comics',
   async () => {
-    const relatedCharacters = {
-      ...relatedCharactersData,
-      data: {
-        ...relatedCharactersData.data,
-      },
-    }
-    return HttpResponse.json(relatedCharacters)
+    return HttpResponse.json(relatedCharactersData)
   }
 )
