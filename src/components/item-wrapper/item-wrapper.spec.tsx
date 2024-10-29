@@ -10,8 +10,6 @@ describe('<ItemWrapper />', () => {
       <ItemWrapper label="Example text" color="bg-blue-100" />
     )
 
-    container.debug()
-
     expect(container.getByText('Example text')).toBeVisible()
     expect(container.getByTestId('item-wrapper')).toHaveClass('bg-blue-100')
   })
