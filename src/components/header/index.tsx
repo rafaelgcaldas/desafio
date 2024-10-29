@@ -11,7 +11,9 @@ export function Header() {
   return (
     <div className="relative w-full border-b border-b-white bg-foreground">
       <header className="mx-auto flex max-w-[1200px] items-center justify-between p-4 text-white">
-        <img src={marvelLogo} alt="Marvel logo" />
+        <Link to="/">
+          <img src={marvelLogo} alt="Marvel logo" />
+        </Link>
 
         <div className="flex items-center justify-center gap-2 md:gap-6">
           <nav className="hidden md:block" data-testid="desktop-menu">
