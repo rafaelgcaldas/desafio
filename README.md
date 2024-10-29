@@ -62,7 +62,7 @@ persoangens favoritos e uma seção de personagens visualizados recentemente.
 
 ## 📋 Pré-requisitos
 
-Para rodar a aplicação, você precisará ter o **Node.js** (>=16) instalado.
+Para rodar a aplicação, você precisará ter o **Node.js** (>=20) instalado.
 
 ## 📦 Instalação
 
