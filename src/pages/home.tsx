@@ -80,7 +80,7 @@ export function Home() {
   if (isError) {
     return (
       <>
-        <Banner title="Sua coleção de personagens" />
+        <Banner hasLogo title="Seja bem vindo ao universo" />
 
         <div className="mx-auto max-w-[1200px] p-4">
           <div className="flex items-center gap-4 rounded-lg bg-red-100 px-4 py-8">
@@ -98,7 +98,7 @@ export function Home() {
   if (isLoading) {
     return (
       <>
-        <Banner hasLogo={true} title="Seja bem vindo ao universo" />
+        <Banner hasLogo title="Seja bem vindo ao universo" />
 
         <Wrapper title=" Todos os personagens" isTop={AllCharactersIsTop}>
           <SkeletonList />
@@ -120,7 +120,7 @@ export function Home() {
 
   return (
     <>
-      <Banner hasLogo={true} title="Seja bem vindo ao universo" />
+      <Banner hasLogo title="Seja bem vindo ao universo" />
 
       {favoritesList.length > 0 && (
         <Wrapper title="Personagens favoritos">
