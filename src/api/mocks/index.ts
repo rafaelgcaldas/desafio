@@ -7,7 +7,8 @@ import { searchCharacterMock } from './search-characters-mock'
 export const worker = setupWorker(
   getCharacterMock,
   getCharactersMock,
-  searchCharacterMock
+  searchCharacterMock,
+  getCharactersMock
 )
 
 export async function enableMSW() {

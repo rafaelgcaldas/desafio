@@ -2,11 +2,11 @@ import { charactersMetaData } from '@/test/mocks/characters'
 import type { CharactersMetaData } from '@/types/types'
 import { http, HttpResponse } from 'msw'
 
-interface testParam {
+interface Param {
   characterId: string
 }
 
-export const getCharacterMock = http.get<testParam, never, CharactersMetaData>(
+export const getCharacterMock = http.get<Param, never, CharactersMetaData>(
   '/v1/public/characters/:characterId',
   async ({ params }) => {
     if (params.characterId !== '1011334') {
