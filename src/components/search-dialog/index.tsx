@@ -1,7 +1,7 @@
 import { searchCharacters } from '@/api/searchCharacters'
 import type { Characters } from '@/types/types'
 import { DialogTrigger } from '@radix-ui/react-dialog'
-import { Search } from 'lucide-react'
+import { Loader, Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDebouncedCallback } from 'use-debounce'
@@ -9,10 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
 
 export function SearchDialog() {
   const [open, setOpen] = useState(false)
+  const [isloading, setIsloading] = useState(false)
   const [result, setResult] = useState<Characters[] | undefined>(undefined)
 
   const debounced = useDebouncedCallback(
     async (value) => {
+      setIsloading(true)
       if (value.trim() === '') {
         setResult(undefined)
         return
@@ -20,6 +22,7 @@ export function SearchDialog() {
 
       const response = await searchCharacters({ searchTerm: value.trim() })
       setResult(response)
+      setIsloading(false)
     },
     500 // delay in ms
   )
@@ -45,7 +48,11 @@ export function SearchDialog() {
           </label>
           <div className="relative w-full">
             <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
-              <Search className="size-5" />
+              {isloading ? (
+                <Loader className="size-5 animate-spin" />
+              ) : (
+                <Search className="size-5" />
+              )}
             </div>
             <input
               type="text"
