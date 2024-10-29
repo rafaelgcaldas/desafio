@@ -7,6 +7,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { Card } from '.'
 
 const onCharacterNavigationFn = vi.fn()
+const onFAvoriteNavigationFn = vi.fn()
 
 describe('<Card />', () => {
   it('should be able render correctly', () => {
@@ -14,6 +15,7 @@ describe('<Card />', () => {
       <Card
         character={character}
         onCharacterNavigation={onCharacterNavigationFn}
+        onFavoriteNavigation={onFAvoriteNavigationFn}
       />
     )
 
@@ -40,6 +42,7 @@ describe('<Card />', () => {
       <Card
         character={character}
         onCharacterNavigation={onCharacterNavigationFn}
+        onFavoriteNavigation={onFAvoriteNavigationFn}
       />
     )
 
@@ -51,19 +54,22 @@ describe('<Card />', () => {
     expect(onCharacterNavigationFn).toHaveBeenCalledWith(character)
   })
 
-  // it('should be able click favorite button', async () => {
-  //   const event = userEvent.setup()
+  it('should be able click favorite button', async () => {
+    const event = userEvent.setup()
 
-  //   const container = render(
-  //     <Card
-  //       character={character}
-  //       onCharacterNavigation={onCharacterNavigationFn}
-  //     />
-  //   )
+    const container = render(
+      <Card
+        character={character}
+        onCharacterNavigation={onCharacterNavigationFn}
+        onFavoriteNavigation={onFAvoriteNavigationFn}
+      />
+    )
 
-  //   const favoriteButton = container.getByLabelText(/favorite character/i)
+    const favoriteButton = container.getByLabelText(/favorite character/i)
 
-  //   await event.click(favoriteButton)
-  //   expect(favoriteButton).toHaveClass('text-yellow-500')
-  // })
+    await event.click(favoriteButton)
+
+    expect(onCharacterNavigationFn).toHaveBeenCalled()
+    expect(onCharacterNavigationFn).toHaveBeenCalledWith(character)
+  })
 })

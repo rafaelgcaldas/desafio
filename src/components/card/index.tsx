@@ -1,4 +1,3 @@
-import { useStore } from '@/store'
 import type { Characters } from '@/types/types'
 import { MoveUpRight, Star } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
@@ -6,19 +5,14 @@ import { twMerge } from 'tailwind-merge'
 export interface CardProps {
   character: Characters
   onCharacterNavigation: (character: Characters) => void
+  onFavoriteNavigation: (character: Characters) => void
 }
 
-export function Card({ character, onCharacterNavigation }: CardProps) {
-  const { addFavoriteCharacter } = useStore()
-  function handleAddFavoriteCharacter(character: Characters) {
-    const favoriteCharacter = {
-      ...character,
-      favorite: true,
-    }
-
-    addFavoriteCharacter(favoriteCharacter)
-  }
-
+export function Card({
+  character,
+  onCharacterNavigation,
+  onFavoriteNavigation,
+}: CardProps) {
   return (
     <div className="group w-full rounded-lg border border-gray-200 bg-white hover:shadow-xl">
       <img
@@ -33,7 +27,7 @@ export function Card({ character, onCharacterNavigation }: CardProps) {
           </h5>
           <Star
             aria-label="Favorite character"
-            onClick={() => handleAddFavoriteCharacter(character)}
+            onClick={() => onFavoriteNavigation(character)}
             className={twMerge(
               'size-5 cursor-pointer',
               character.favorite ? 'text-yellow-500' : ''
