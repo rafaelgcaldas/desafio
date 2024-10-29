@@ -1,25 +1,36 @@
 import { getCharacter } from '@/api/get-character'
+import { getRelatedCharacter } from '@/api/get-related-characters'
 import { Banner } from '@/components/banner'
+import { ItemWrapper } from '@/components/item-wrapper'
 import { DetailsSkeleton } from '@/components/loading/details-skeleton'
+import { RelatedItems } from '@/components/related-items'
 import { Button } from '@/components/ui/button'
 import { useStore } from '@/store'
 import type { Characters } from '@/types/types'
 import { useQuery } from '@tanstack/react-query'
-import { BookOpen, Star } from 'lucide-react'
+import { Info, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export function CharacterDetails() {
+  const navigate = useNavigate()
   const { characterId } = useParams()
-  const { favoritesList, addFavoriteCharacter } = useStore()
+  const {
+    favoritesList,
+    addFavoriteCharacter,
+    recentlyVisitedCharactersList,
+    addRecentlyVisitedCharacter,
+  } = useStore()
   const [character, setCharacter] = useState<Characters>()
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['character', characterId],
-    queryFn: () => getCharacter(Number(characterId!)),
-    staleTime: 5 * 10000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['character', Number(characterId)],
+    queryFn: () => getCharacter(characterId!),
+  })
+
+  const { data: relatedCharacters } = useQuery({
+    queryKey: ['relatedCharacter', Number(characterId)],
+    queryFn: () => getRelatedCharacter(characterId!),
   })
 
   useEffect(() => {
@@ -27,19 +38,27 @@ export function CharacterDetails() {
       (favorite) => favorite.id === data?.id
     )
 
-    if (data) {
-      if (isfavorite) {
-        const newCharacter = {
-          ...data,
-          favorite: true,
-        }
-
-        setCharacter(newCharacter)
-      } else {
-        setCharacter(data)
+    if (isfavorite && data) {
+      const newCharacter = {
+        ...data,
+        favorite: true,
       }
+
+      setCharacter(newCharacter)
+    } else {
+      setCharacter(data)
     }
-  }, [data, favoritesList])
+  }, [data, favoritesList, characterId])
+
+  useEffect(() => {
+    const isRecentlyVisited = recentlyVisitedCharactersList.some(
+      (favorite) => favorite.id === data?.id
+    )
+
+    if (!isRecentlyVisited && data) {
+      addRecentlyVisitedCharacter(data)
+    }
+  }, [recentlyVisitedCharactersList, data, addRecentlyVisitedCharacter])
 
   function handleFavoriteCharacter(character: Characters) {
     const favoriteCharacter = {
@@ -50,11 +69,37 @@ export function CharacterDetails() {
     addFavoriteCharacter(favoriteCharacter)
   }
 
+  function getCharacterId(url: string) {
+    return url.split('/').pop()
+  }
+
+  function navigateToCharacter(link: string) {
+    const characterId = getCharacterId(link)
+    navigate(`/details/${characterId}`)
+  }
+
   if (isLoading) {
     return (
       <>
         <Banner title="" />
         <DetailsSkeleton />
+      </>
+    )
+  }
+
+  if (isError) {
+    return (
+      <>
+        <Banner title="Sua coleção de personagens" />
+        <div className="mx-auto max-w-[1200px] p-4">
+          <div className="flex items-center gap-4 rounded-lg bg-red-100 px-4 py-8">
+            <Info className="size-5" />
+            <p>
+              Ocorreu um erro ao carregar os dados do persoangem. Atualiza a
+              página e tente novamente.
+            </p>
+          </div>
+        </div>
       </>
     )
   }
@@ -97,17 +142,17 @@ export function CharacterDetails() {
               character?.series?.items.length > 0 ? (
                 <div className="space-y-2">
                   {character?.series?.items.map((item, index) => (
-                    <div
+                    <ItemWrapper
+                      label={item.name}
                       key={index}
-                      className="flex items-center gap-4 rounded-lg bg-blue-100 p-4"
-                    >
-                      <BookOpen />
-                      <p>{item.name}</p>
-                    </div>
+                      color="bg-blue-100"
+                    />
                   ))}
                 </div>
               ) : (
-                <p>Não possui</p>
+                <p className="rounded-lg border border-gray-200 p-4">
+                  Não possui
+                </p>
               )}
             </div>
 
@@ -119,17 +164,17 @@ export function CharacterDetails() {
               character?.events?.items.length > 0 ? (
                 <div className="space-y-2">
                   {character?.events?.items.map((item, index) => (
-                    <div
+                    <ItemWrapper
+                      label={item.name}
                       key={index}
-                      className="flex items-center gap-4 rounded-lg bg-yellow-100 p-4"
-                    >
-                      <BookOpen />
-                      <p>{item.name}</p>
-                    </div>
+                      color="bg-yellow-100"
+                    />
                   ))}
                 </div>
               ) : (
-                <p>Não possui</p>
+                <p className="rounded-lg border border-gray-200 p-4">
+                  Não possui
+                </p>
               )}
             </div>
           </div>
@@ -144,17 +189,17 @@ export function CharacterDetails() {
               character?.comics?.items.length > 0 ? (
                 <div className="space-y-2">
                   {character?.comics?.items.map((item, index) => (
-                    <div
+                    <ItemWrapper
+                      label={item.name}
                       key={index}
-                      className="flex items-center gap-4 rounded-lg bg-green-100 p-4"
-                    >
-                      <BookOpen />
-                      <p>{item.name}</p>
-                    </div>
+                      color="bg-green-100"
+                    />
                   ))}
                 </div>
               ) : (
-                <p>Não possui</p>
+                <p className="rounded-lg border border-gray-200 p-4">
+                  Não possui
+                </p>
               )}
             </div>
 
@@ -167,22 +212,29 @@ export function CharacterDetails() {
               character?.stories?.items.length > 0 ? (
                 <div className="space-y-2">
                   {character?.stories?.items.map((item, index) => (
-                    <div
+                    <ItemWrapper
+                      label={item.name}
                       key={index}
-                      className="flex items-center gap-4 rounded-lg bg-red-100 p-4"
-                    >
-                      <BookOpen />
-                      <p>{item.name}</p>
-                    </div>
+                      color="bg-red-100"
+                    />
                   ))}
                 </div>
               ) : (
-                <p>Não possui</p>
+                <p className="rounded-lg border border-gray-200 p-4">
+                  Não possui
+                </p>
               )}
             </div>
           </div>
         </div>
       </div>
+
+      {relatedCharacters && (
+        <RelatedItems
+          relatedItemsList={relatedCharacters}
+          onNavigateToCharacter={navigateToCharacter}
+        />
+      )}
     </>
   )
 }
